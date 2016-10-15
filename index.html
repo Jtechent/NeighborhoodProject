@@ -2,9 +2,59 @@
   <head>
     <title>Where be theam, ice ceams?</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style media="screen">
+      .invis{
+        display: none;
+      }
+
+      .bulletless{
+        list-style: none;
+        padding-left: 0;
+      }
+
+      .cityOption{
+        text-decoration: none;
+        color: inherit;
+      }
+      .cityOption:hover{
+        color: #3B5998;
+      }
+
+      .optionWrapper{
+        padding: 10px 0;
+        text-align: center;
+      }
+
+
+
+      #querior{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      #map{
+        width: 100%;
+        height: 100%;
+      }
+    </style>
   </head>
   <body>
-    <div id="map"></div>
+    <div id="map" class="invis"></div>
+    <div id="querior">
+      <form data-bind="submit: citySearch" id="queriorForm">
+        <input type="text" value="Miami" class="citySelect">
+        <input type="submit" class='invis'>
+      </form>
+      <ul data-bind="foreach: cityQuery, click: mapLogic" class="bulletless">
+        <li class="optionWrapper"><a href="#" class="cityOption" data-bind="text: $data[0]"></a></li>
+      </ul>
+    </div>
+
+    <script type="text/javascript" src='js/knockout.js'></script>
   <script type="text/javascript" src="js/main.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwYxt2NExnl2hBlsMgZrOb8-pkm3y6jeA" async defer></script>
   </body>
