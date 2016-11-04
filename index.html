@@ -1,61 +1,156 @@
 <html>
-  <head>
-    <title>Where be theam, ice ceams?</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style media="screen">
-      .invis{
+
+<head>
+  <title>Where be theam, ice ceams?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style media="screen">
+    .bulletless {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .cityOption {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .cityOption:hover {
+      color: #3B5998;
+    }
+
+    .optionWrapper {
+      padding: 10px 0;
+      text-align: center;
+    }
+
+    .rowFlex {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .columnFlex {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .textRight {
+      text-align: right;
+    }
+
+    .justifyAround {
+      justify-content: space-around;
+    }
+
+    .blackBold {
+      color: black;
+      font-weight: bold;
+    }
+
+    .whiteBackground {
+      background: white;
+    }
+
+    .fullScreen {
+      height: 100%;
+    }
+
+    .conditionalUnderline {
+      text-decoration: none;
+    }
+
+    .conditionalUnderline:hover {
+      text-decoration: underline;
+    }
+
+    .infoName {
+      color: black;
+      text-decoration: none;
+    }
+
+    .fixBelow {
+      position: fixed;
+      bottom: 0;
+      margin-bottom: 0;
+    }
+    /*specificity level 2*/
+
+    .invis {
+      display: none;
+    }
+
+    .iconic {
+      font-weight: bold;
+      font-size: 2em;
+      padding: 0 5px;
+      text-decoration: none;
+      color: black;
+    }
+
+    .fixTop {
+      position: fixed;
+      top: 0;
+    }
+    /*transforms*/
+
+    #querior {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+
+    /*media queries*/
+
+    @media (min-width: 950px) {
+      .iconic {
         display: none;
       }
+    }
+  </style>
+</head>
 
-      .bulletless{
-        list-style: none;
-        padding-left: 0;
-      }
-
-      .cityOption{
-        text-decoration: none;
-        color: inherit;
-      }
-      .cityOption:hover{
-        color: #3B5998;
-      }
-
-      .optionWrapper{
-        padding: 10px 0;
-        text-align: center;
-      }
-
-
-
-      #querior{
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-      }
-
-      #map{
-        width: 100%;
-        height: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="map" class="invis"></div>
-    <div id="querior">
-      <form data-bind="submit: citySearch" id="queriorForm">
-        <input type="text" value="Miami" class="citySelect">
-        <input type="submit" class='invis'>
+<body>
+  <div id="map" class="invis"></div>
+  <div id="querior">
+    <form data-bind="submit: citySearch" id="queriorForm">
+      <input type="text" value="Miami" class="citySelect">
+      <input type="submit" class='invis'>
+    </form>
+    <ul data-bind="foreach: cityQuery, click: mapLogic" class="bulletless">
+      <li class="optionWrapper">
+        <a href="#" class="cityOption" data-bind="text: $data[0]"></a>
+      </li>
+    </ul>
+  </div>
+  <div class="fixTop rowFlex invis fullScreen" id="textQuerior">
+    <div class="whiteBackground">
+      <form data-bind="submit: addressMarkerMapping.filter">
+        <label for="venue">Venue</label>
+        <input id="textQueriorInput" type="text" name="venue" value="">
+        <input type="submit" name="name" value="" class="invis">
       </form>
-      <ul data-bind="foreach: cityQuery, click: mapLogic" class="bulletless">
-        <li class="optionWrapper"><a href="#" class="cityOption" data-bind="text: $data[0]"></a></li>
+      <ul class="venueList" data-bind="foreach: venueList">
+        <li class="venueItem">
+          <a class="blackBold conditionalUnderline" href="#" data-bind="text: $data, click: $parent.addressMarkerMapping.mapAction('click')"></a>
+        </li>
       </ul>
     </div>
+    <div><a class='iconic' href='#' data-bind="click: hamburgClick">&#8801;</a></div>
+  </div>
+  <div class="fixBelow">Site map powered by Google with Foursquare data.</div>
 
-    <script type="text/javascript" src='js/knockout.js'></script>
+  <script type="text/javascript" src='js/knockout.js'></script>
+  <script type="text/javascript" src="js/controls.js"></script>
+  <script type="text/javascript" src="js/networkManager.js"></script>
   <script type="text/javascript" src="js/main.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwYxt2NExnl2hBlsMgZrOb8-pkm3y6jeA" async defer></script>
-  </body>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwYxt2NExnl2hBlsMgZrOb8-pkm3y6jeA" async defer onload="googleCheck.setFlag()"></script>
+</body>
+
 </html>
