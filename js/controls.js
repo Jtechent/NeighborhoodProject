@@ -18,13 +18,21 @@ var controls = function() {
   var toggled = false;
   var stayOpen = false;
 
+  function updateOffset () {
+    //I cannot believe I didn't think of this before!!! ARG!
+    offset = textQuerior.clientWidth - hamburger.clientWidth;
+    textQuerior.style.left = (0 - offset) + 'px';
+  }
+
+
   function setupTextQuerior(setup) {
     //I know this is a write read but I want to do it
     //calling this the first time sets everything up,
     //calling it subsequent times will call the hamburgHandle function
     textQuerior.classList.remove('invis');
-    offset = textQuerior.clientWidth - hamburger.clientWidth;
-    textQuerior.style.left = (0 - offset) + 'px';
+    updateOffset();
+    //offset = textQuerior.clientWidth - hamburger.clientWidth;
+    //textQuerior.style.left = (0 - offset) + 'px';
 
 
     //setup handlers
