@@ -22,6 +22,9 @@ var controls = function() {
     //I cannot believe I didn't think of this before!!! ARG!
     offset = textQuerior.clientWidth - hamburger.clientWidth;
     textQuerior.style.left = (0 - offset) + 'px';
+    if (toggled || stayOpen) {
+      textQuerior.style.transform = 'translate(' + offset + 'px)';
+    }
   }
 
 
