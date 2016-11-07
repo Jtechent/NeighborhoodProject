@@ -66,6 +66,7 @@ var controls = function() {
     setupTextQuerior(true)
   };
   textQueriorControls.dispatchClick = setupTextQuerior();
+  textQueriorControls.update = updateOffset;
   tbr.textQuerior = textQueriorControls;
   //textQuerior setup ends
 
