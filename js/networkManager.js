@@ -95,6 +95,8 @@ JsonpRequest.prototype.send = function() {
   if (readyToSend) {
     //create script, set src and set time out to be called in the event that the request fails
     var script = document.createElement('script');
+    script.defer = true;
+    console.log(script.async, script.defer);
     script.src = this.internalConfig.url + '&callback=jsonpDropoff.read("' + this.internalConfig.success + '")';
     document.getElementsByTagName('head')[0].appendChild(script);
     this.internalConfig.failure ? window.setTimeout(this.internalConfig.failure, 6000) : null;
