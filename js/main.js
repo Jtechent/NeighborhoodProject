@@ -303,8 +303,6 @@ var myViewModel = {
       });
       //grab foursquare data
       //create a jsonp
-      /*var jsonpTag = document.createElement('script');
-       */
       var url = 'https://api.foursquare.com/v2/venues/search' +
         '?client_id=YKHATSNI4PS0K4TQXIXNWD12B4YCUTDLJC3ECIQMJ5QQTBNK' +
         '&client_secret=DAB2LCKMTADFEDKXBCISFZD31OC5YFQK3GUZ5MAFOWJOA3H4' +
@@ -312,10 +310,7 @@ var myViewModel = {
         '&near=' +
         city.lat + ',' + city.lng +
         '&query=Ice+Cream';
-      /*
-      + '&callback=myViewModel.foursquareCallback';
-      document.getElementsByTagName('head')[0].appendChild(jsonpTag);
-      */
+
       var success = (function() {
         var viewModel = myViewModel;
         var tbr = function(data) {
