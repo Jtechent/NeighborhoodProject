@@ -31,21 +31,28 @@ function MapAddressMarker() {
     //filter displays or hides foursquare results depending on user query
     var mapping = that.mappings; //this.mapping is an object with keys corresponding to the addresses of the marker they point location property
     var tbr = function() {
-      var value = document.getElementById('textQueriorInput').value; //user query
-      var addressItems = document.getElementsByClassName('venueItem'); //foursquare venue addresses
-      for (var i = 0; i < addressItems.length; i++) {
-        //test each venue address against the query and display matches in both the list of addresses and on the map
-        // in the form of markers
-        var addressClasses = addressItems[i].classList;
-        if (addressItems[i].textContent.search(value) > -1) {
-          addressClasses.remove('invis');
-          //I use the child of the element for styling/convience purposes
-          mapping[addressItems[i].children[0].textContent].setVisible(true);
+      //get user input, list of all Foursquare venue addresses, create new arrays of to show/hide venues
+      var value = myViewModel.venueQuery(); //user query
+      var venues = myViewModel.venueList().concat(myViewModel.hiddenVenueList);
+      console.log(venues , mapping);
+      var toDisplay = [];
+      var toHide = [];
+      for (var i = 0; i < venues.length; i++) {
+        //if query matches push venue to array of showable venues and show associated marker
+        if (venues[i].search(value) > -1) {
+          toDisplay.push(venues[i]);
+          mapping[venues[i]].setVisible(true);
         } else {
-          addressClasses.add('invis');
-          mapping[addressItems[i].children[0].textContent].setVisible(false);
+          //else push to hidden venues and hide associated marker
+          toHide.push(venues[i]);
+          mapping[venues[i]].setVisible(false);
         }
       }
+      //push new hidden/shown values to viewmodel
+      myViewModel.venueList(toDisplay);
+      myViewModel.hiddenVenueList = toHide;
+      //update side menue to show correctly
+      controls.textQuerior.update();
     };
 
     return tbr;
@@ -243,6 +250,9 @@ function foursquareCallback(data) {
           request.send();
           i--;
         }
+        else {
+          alert('We are having problems connecting with our friends at Foursquare at the moment 😞. Try reloading the page ');
+        }
       };
 
       return tbr;
@@ -262,7 +272,9 @@ function foursquareCallback(data) {
 
 var myViewModel = {
   querior: document.getElementById('querior'),
+  venueQuery: ko.observable(""),
   venueList: ko.observableArray(),
+  hiddenVenueList: [],
   cityQuery: ko.observableArray(),
   addressMarkerMapping: new MapAddressMarker(),
   citySearch: function(data) {
