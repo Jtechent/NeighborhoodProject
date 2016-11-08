@@ -117,10 +117,10 @@
 </head>
 
 <body>
-  <div id="map" class="invis"></div>
-  <div id="querior">
+  <div id="map" data-bind="visible: seeMap"></div>
+  <div id="querior" data-bind="visible: seeQuery">
     <form data-bind="submit: citySearch" id="queriorForm">
-      <input type="text" value="Miami" class="citySelect">
+      <input type="text" class="citySelect" data-bind="value: citySelect">
       <input type="submit" class='invis'>
     </form>
     <ul data-bind="foreach: cityQuery, click: mapLogic" class="bulletless">
