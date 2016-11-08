@@ -37,12 +37,21 @@
       text-align: right;
     }
 
+    .textCenter {
+      text-align: center;
+    }
+
     .justifyAround {
       justify-content: space-around;
     }
 
     .blackBold {
       color: black;
+      font-weight: bold;
+    }
+
+    .inheritBold{
+      color: inherit;
       font-weight: bold;
     }
 
@@ -90,6 +99,23 @@
       position: fixed;
       top: 0;
     }
+
+    .venueList:nth-child(4n+0) {
+      color: #6b3e26;
+    }
+
+    .venueList:nth-child(4n+1) {
+      color: #ffc5d9;
+    }
+
+    .venueList:nth-child(4n+2) {
+      color: #c2f2d0;
+    }
+
+    .venueList:nth-child(4n+3) {
+      color:  #ffcb85;
+    }
+
     /*transforms*/
 
     #querior {
@@ -119,6 +145,7 @@
 <body>
   <div id="map" data-bind="visible: seeMap"></div>
   <div id="querior" data-bind="visible: seeQuery">
+    <h1 class="textCenter">ICE CREAM HUNTER</h1>
     <form data-bind="submit: citySearch" id="queriorForm">
       <input type="text" class="citySelect" data-bind="value: citySelect">
       <input type="submit" class='invis'>
@@ -138,7 +165,7 @@
       </form>
       <ul class="venueList" data-bind="foreach: venueList">
         <li class="venueItem">
-          <a class="blackBold conditionalUnderline" href="#" data-bind="text: $data, click: $parent.addressMarkerMapping.mapAction('click')"></a>
+          <a class="inheritBold conditionalUnderline" href="#" data-bind="text: $data, click: $parent.addressMarkerMapping.mapAction('click')"></a>
         </li>
       </ul>
     </div>
