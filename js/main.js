@@ -271,7 +271,9 @@ function foursquareCallback(data) {
 }
 
 var myViewModel = {
-  querior: document.getElementById('querior'),
+  seeMap: ko.observable(false),
+  seeQuery: ko.observable(true),
+  citySelect: ko.observable("Miami"),
   venueQuery: ko.observable(""),
   venueList: ko.observableArray(),
   hiddenVenueList: [],
@@ -281,7 +283,7 @@ var myViewModel = {
     //given user input this function searches google for cities which match that input in some way
     //and returns them pushing them to the correct observableArray
     var returnedCities = [];
-    var city = data.getElementsByClassName('citySelect')[0].value;
+    var city = myViewModel.citySelect();
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({
       'address': city
@@ -303,9 +305,9 @@ var myViewModel = {
     //removes the city query html from display, adds google map at the place specified by the user by
     //searching my observableArray for the array which contains the correct string and setting the map center
     //to latlng in that same array
-    this.querior.style.display = 'none';
-    //show the menu
-    document.getElementById('map').classList.remove('invis');
+    this.seeQuery(false);
+    //show the map
+    this.seeMap(true);
 
     function initMap(city) {
       map = new google.maps.Map(document.getElementById('map'), {
