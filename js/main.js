@@ -32,14 +32,14 @@ function MapAddressMarker() {
     var mapping = that.mappings; //this.mapping is an object with keys corresponding to the addresses of the marker they point location property
     var tbr = function() {
       //get user input, list of all Foursquare venue addresses, create new arrays of to show/hide venues
-      var value = myViewModel.venueQuery(); //user query
+      var value = myViewModel.venueQuery().toLower(); //user query
       var venues = myViewModel.venueList().concat(myViewModel.hiddenVenueList);
       console.log(venues , mapping);
       var toDisplay = [];
       var toHide = [];
       for (var i = 0; i < venues.length; i++) {
         //if query matches push venue to array of showable venues and show associated marker
-        if (venues[i].search(value) > -1) {
+        if (venues[i].toLowerCase().search(value) > -1) {
           toDisplay.push(venues[i]);
           mapping[venues[i]].setVisible(true);
         } else {
@@ -225,12 +225,7 @@ function foursquareCallback(data) {
       '?client_id=YKHATSNI4PS0K4TQXIXNWD12B4YCUTDLJC3ECIQMJ5QQTBNK' +
       '&client_secret=DAB2LCKMTADFEDKXBCISFZD31OC5YFQK3GUZ5MAFOWJOA3H4' +
       '&v=20140806';
-    /*
-    + '&callback=myViewModel.infoDisplay';
-    var script = document.createElement('script');
-    script.src = url;
-    document.getElementsByTagName('head')[0].appendChild(script);
-    */
+    
     var success = (function() {
       //if the request is 200, I call infoDisplay with the returned content
       var viewModel = myViewModel;
