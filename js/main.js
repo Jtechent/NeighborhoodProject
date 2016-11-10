@@ -225,7 +225,7 @@ function foursquareCallback(data) {
       '?client_id=YKHATSNI4PS0K4TQXIXNWD12B4YCUTDLJC3ECIQMJ5QQTBNK' +
       '&client_secret=DAB2LCKMTADFEDKXBCISFZD31OC5YFQK3GUZ5MAFOWJOA3H4' +
       '&v=20140806';
-    
+
     var success = (function() {
       //if the request is 200, I call infoDisplay with the returned content
       var viewModel = myViewModel;
@@ -307,7 +307,7 @@ var myViewModel = {
     function initMap(city) {
       map = new google.maps.Map(document.getElementById('map'), {
         center: city,
-        zoom: 13,
+        zoom: 10,
         mapTypeControl: false
       });
       //grab foursquare data
