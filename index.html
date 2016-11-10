@@ -50,11 +50,6 @@
       font-weight: bold;
     }
 
-    .inheritBold{
-      color: inherit;
-      font-weight: bold;
-    }
-
     .whiteBackground {
       background: white;
     }
@@ -98,22 +93,6 @@
     .fixTop {
       position: fixed;
       top: 0;
-    }
-
-    .venueList:nth-child(4n+0) {
-      color: #6b3e26;
-    }
-
-    .venueList:nth-child(4n+1) {
-      color: #ffc5d9;
-    }
-
-    .venueList:nth-child(4n+2) {
-      color: #c2f2d0;
-    }
-
-    .venueList:nth-child(4n+3) {
-      color:  #ffcb85;
     }
 
     /*transforms*/
@@ -165,7 +144,7 @@
       </form>
       <ul class="venueList" data-bind="foreach: venueList">
         <li class="venueItem">
-          <a class="inheritBold conditionalUnderline" href="#" data-bind="text: $data, click: $parent.addressMarkerMapping.mapAction('click')"></a>
+          <a class="blackBold conditionalUnderline" href="#" data-bind="text: $data, click: $parent.addressMarkerMapping.mapAction('click')"></a>
         </li>
       </ul>
     </div>
