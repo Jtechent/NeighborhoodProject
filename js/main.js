@@ -239,10 +239,10 @@ function foursquareCallback(data) {
       var err = error;
       var viewModel = myViewModel;
       var request = venueRequest;
-      var i = 3;
+      var i = 2;
       var tbr = function() {
-        if (i > 0) {
-          request.send(2000);
+        if (i <= 0) {
+          request.send(3000);
           i--;
         }
         else {
@@ -255,22 +255,22 @@ function foursquareCallback(data) {
     venueRequest.addURL(url);
     venueRequest.addSuccess(success);
     venueRequest.addFailure(failure);
-    venueRequest.send(2000);
+    venueRequest.send();
   }
   //init the mapping object for addresses to venues
   var venues = data.response.venues;
   var venueError = new NetworkErrorManager({
     action: function () {
-      console.log('in action');
       alert('We are having problems connecting with our friends at Foursquare at the moment. Try reloading the page ');
     },
     conditional: (function() {
-      var firstFlag = false;
+      var venueCount = venues.length;
+      var errCount = 0;
       var tbr = function() {
-        console.log('in conditional');
-        if (!firstFlag) {
+        console.log(venueCount, errCount);
+        errCount++;
+        if (venueCount === errCount) {
           this.action();
-          firstFlag = true;
         }
       };
 
