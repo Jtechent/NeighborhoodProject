@@ -32,9 +32,8 @@ function MapAddressMarker() {
     var mapping = that.mappings; //this.mapping is an object with keys corresponding to the addresses of the marker they point location property
     var tbr = function() {
       //get user input, list of all Foursquare venue addresses, create new arrays of to show/hide venues
-      var value = myViewModel.venueQuery().toLower(); //user query
+      var value = myViewModel.venueQuery().toLowerCase(); //user query
       var venues = myViewModel.venueList().concat(myViewModel.hiddenVenueList);
-      console.log(venues , mapping);
       var toDisplay = [];
       var toHide = [];
       for (var i = 0; i < venues.length; i++) {
@@ -229,7 +228,7 @@ function foursquareCallback(data) {
     var success = (function() {
       //if the request is 200, I call infoDisplay with the returned content
       var viewModel = myViewModel;
-      var tbr = function(content) {
+      var tbr = function (content) {
         viewModel.infoDisplay(content);
       };
 
@@ -239,24 +238,23 @@ function foursquareCallback(data) {
       //if first you fail try again... and once more upon cloned failure for good measure
       var viewModel = myViewModel;
       var request = venueRequest;
-      var i = 0;
+      var i = 3;
       var tbr = function() {
-        if (i < 0) {
-          request.send();
+        if (i > 0) {
+          request.send(2000);
           i--;
         }
         else {
-          alert('We are having problems connecting with our friends at Foursquare at the moment 😞. Try reloading the page ');
+          alert('We are having problems connecting with our friends at Foursquare at the moment &#2639. Try reloading the page ');
         }
       };
 
       return tbr;
     })();
-
     venueRequest.addURL(url);
     venueRequest.addSuccess(success);
     venueRequest.addFailure(failure);
-    venueRequest.send();
+    venueRequest.send(2000);
   }
   //init the mapping object for addresses to venues
   var venues = data.response.venues;
