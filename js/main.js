@@ -216,7 +216,7 @@ function foursquareCallback(data) {
   controls = controls();
 
   //functions
-  function getVenue(id) {
+  function getVenue(id, error) {
     //makes a jsonp request for the individual venue data from foursquare
     var venueRequest = new JsonpRequest();
     var url = 'https://api.foursquare.com/v2/venues/' +
@@ -236,6 +236,7 @@ function foursquareCallback(data) {
     })();
     var failure = (function() {
       //if first you fail try again... and once more upon cloned failure for good measure
+      var err = error;
       var viewModel = myViewModel;
       var request = venueRequest;
       var i = 3;
@@ -245,7 +246,7 @@ function foursquareCallback(data) {
           i--;
         }
         else {
-          alert('We are having problems connecting with our friends at Foursquare at the moment &#2639. Try reloading the page ');
+          err.conditional();
         }
       };
 
@@ -258,8 +259,26 @@ function foursquareCallback(data) {
   }
   //init the mapping object for addresses to venues
   var venues = data.response.venues;
+  var venueError = new NetworkErrorManager({
+    action: function () {
+      console.log('in action');
+      alert('We are having problems connecting with our friends at Foursquare at the moment. Try reloading the page ');
+    },
+    conditional: (function() {
+      var firstFlag = false;
+      var tbr = function() {
+        console.log('in conditional');
+        if (!firstFlag) {
+          this.action();
+          firstFlag = true;
+        }
+      };
+
+      return tbr;
+    })()
+  });
   for (var i = 0; i < venues.length; i++) {
-    getVenue(venues[i].id);
+    getVenue(venues[i].id, venueError);
   }
 }
 
