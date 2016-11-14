@@ -56,17 +56,17 @@ JsonpRequest.prototype.addURL = function(url) {
   }
 };
 JsonpRequest.prototype.addSuccess = function(handler) {
+  var self = this;
   if (handler) {
     var augmented = (function() {
       //augment the passed in handler to also set a flag saying the request succeeded
-      var that = this;
+      that = self;
       var tbr = function(data) {
         that.twoHundredReturn = true;
         handler(data);
       };
       return tbr;
     })();
-
     this.internalConfig.success = jsonpDropoff.create(augmented); //I need to have the function in the global space for
     //jsonp to work
     if (this.internalConfig.url) {
@@ -75,10 +75,11 @@ JsonpRequest.prototype.addSuccess = function(handler) {
   }
 };
 JsonpRequest.prototype.addFailure = function(handler) {
+  var self = this;
   if (handler) {
     var augmented = (function() {
       //augment handler to call handler where the request failed
-      var that = this;
+      var that = self;
       var tbr = function() {
         if (!that.twoHundredReturn) {
           handler();
@@ -91,15 +92,27 @@ JsonpRequest.prototype.addFailure = function(handler) {
     this.internalConfig.failure = augmented;
   }
 };
-JsonpRequest.prototype.send = function() {
+JsonpRequest.prototype.send = function(timeout) {
+  var offset;
+  timeout ? offset = timeout : offset = 6000;
   if (readyToSend) {
     //create script, set src and set time out to be called in the event that the request fails
     var script = document.createElement('script');
     script.async = true;
     script.src = this.internalConfig.url + '&callback=jsonpDropoff.read("' + this.internalConfig.success + '")';
     document.getElementsByTagName('head')[0].appendChild(script);
-    this.internalConfig.failure ? window.setTimeout(this.internalConfig.failure, 6000) : null;
+    this.internalConfig.failure ? window.setTimeout(this.internalConfig.failure, offset) : null;
+
   } else {
     throw "ERROR: incomplete required fields in jsonp request";
   }
 };
+
+function NetworkErrorManager(config) {
+  this.action;
+  this.conditional;
+  if (config) {
+    this.action = config.action;
+    this.conditional = config.conditional;
+  }
+}
