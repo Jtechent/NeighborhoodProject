@@ -1,6 +1,8 @@
+<!DOCTYPE html>
 <html>
 
 <head>
+  <meta charset="utf-8">
   <title>Where be theam, ice ceams?</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style media="screen">
@@ -106,8 +108,8 @@
     }
 
     #map {
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
     }
 
     /*media queries*/
@@ -136,9 +138,9 @@
   </div>
   <div class="fixTop rowFlex invis fullScreen" id="textQuerior">
     <div class="whiteBackground">
+      <h3 class="textCenter">Venue Search</h3>
       <form data-bind="submit: addressMarkerMapping.filter">
-        <label for="venue">Venue</label>
-        <input id="textQueriorInput" type="text" name="venue" value="">
+        <input id="textQueriorInput" type="text" name="venue" data-bind="value: venueQuery">
         <input type="submit" name="name" value="" class="invis">
       </form>
       <ul class="venueList" data-bind="foreach: venueList">
